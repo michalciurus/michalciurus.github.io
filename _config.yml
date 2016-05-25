@@ -2,7 +2,7 @@
 
 title: accent
 url: "http://michalciurus.github.io"
-baseurl: ""
+baseurl: "/accent"
 
 # This will show up at the top of index page
 site_heading: >
