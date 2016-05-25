@@ -1,0 +1,44 @@
+<div class="container">
+    <hr />
+    {% if site.about_footer %}
+        {% if page.profile_picture %}
+            {% assign profile_picture = page.profile_picture %}
+        {% else %}
+            {% assign profile_picture = site.profile_picture %}
+        {% endif %}
+        {% if profile_picture %}
+            <div id="img-about">
+                <img class="about-img pull-left" src="{{ profile_picture }}">
+            </div>
+        {% else %}
+            <div class="no-image" id="img-about">
+            </div>
+        {% endif %}
+        <div class="about-stub">
+            {% if page.author_site %}
+                {% assign author_site = page.author_site %}
+            {% else %}
+                {% assign author_site = "about" %}
+            {% endif %}
+            <a class="different-highlight" href="{{ author_site }}">
+                <h2 style="font-family: Montserrat">
+                    {% if page.author %}
+                        {{ page.author }}
+                    {% else %}
+                        {{ site.author }}
+                    {% endif %}
+                </h2>
+            </a>
+            {% if page.about_stub %}
+                <p id="about-description" style="margin-top: 4px;">
+                    {{ page.about_stub }}
+                </p>
+            {% else %}
+                <p id="about-description" style="margin-top: 4px;">
+                    {{ site.about_stub }}
+                </p>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+<div style="clear:both"></div>
