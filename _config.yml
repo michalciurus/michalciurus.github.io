@@ -6,17 +6,17 @@ baseurl: ""
 
 # This will show up at the top of index page
 site_heading: >
-    foo <span class="faded">'s blog</span>
+    Swift <span class="faded">Pearls</span>
 
-email: your@email.com
-author: yourname
+email: michael.ciurus@gmail.com
+author: Michal Ciurus
 # This description will show up in google search results
 # (for index page) etc.
 description: >
-    accent is, as Trump would put it, the best
+    Swift programming pearls
 
 # This will what will show against &copy; in the footer
-copyright: accent
+copyright: Michal Ciurus
 # Toggle your short bio, which will displayed on your index page
 # Just toggle it and run jekyll again to see
 intro: false         # Tip: Remove the span from site_heading if intro is set to true
@@ -32,7 +32,7 @@ short_bio: >
 permalink: /:title.html
 
 # Comments are powered by disqus
-comments: true
+comments: false
 
 # keep about_stub roughly 12 words long for best results
 # This will show up at the bottom of each post
@@ -41,19 +41,19 @@ comments: true
 about_stub: >
     Keep this sentence less than 13 words or it won't look good.
 
-about_footer: true
+about_footer: false
 
-twitter_username: AnkitSultana
-github_username: yourgithub
+twitter_username: MichaelCiurus
+github_username: michalciurus
 facebook_id: yourusername
 
 favicon: true
 favicon_location: "images/favicon.ico"
 
 profile_picture: images/temp.png
-paginate: 5
+paginate: 20
 paginate_path: "/page/:num"
-tracking_id: UA-69243698-7 # GA Tracking ID
+tracking_id: UA-78399845-1 # GA Tracking ID
 
 # Social Stuff | open graph and twitter cards
 og_image: "images/accent.png" # This will show in facebook thumbnails
