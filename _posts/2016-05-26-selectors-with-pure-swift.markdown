@@ -57,8 +57,11 @@ let closureSelector = ClosureSelector<UIButton> { (button) in
 }
 
 button.addTarget(closureSelector, action: closureSelector.selector, forControlEvents: .TouchDown)
-button.sendActionsForControlEvents(UIControlEvents.TouchDown)
 }
+
+...
+button.sendActionsForControlEvents(UIControlEvents.TouchDown)
+...
 {% endhighlight %}
 
 Nope 😢 The text doesn't get printed - the selector doesn't get called.
@@ -101,7 +104,9 @@ button.addTarget(forControlEvents: .TouchDown) { (button) -> Void in
 }
 {% endhighlight %}
 
-Done! That sure looks pretty to me 🦄 I hope that UIKit gets translated to pure swift one day, and we won't have to resolve to such drastic measures.
+Done! That sure looks pretty to me 🦄 I like it and I'm sure going to use it in my Swift code.
+
+I hope that UIKit gets translated to pure swift one day, and we won't have to resolve to such drastic measures.
 
 
 
