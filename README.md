@@ -2,6 +2,7 @@ Swift programming pearls.
 
 http://swiftpearls.com
 
+Thanks to Accent Jekyll Theme:
 ---
 
 ### License
