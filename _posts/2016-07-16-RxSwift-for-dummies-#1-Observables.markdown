@@ -56,26 +56,16 @@ Let's analyze step by step what's happening:
 dispatch_async(...)
 {% endhighlight %}
 
-The `Observable` executes code on the same thread as the `Observer` (unless programmed otherwise) so let's use a simple `dispatch_async` to not block it.
+The `Observable` executes code on the main thread (unless programmed otherwise) so let's use a simple `dispatch_async` to not block it.
 
 {% highlight swift %}
 observer.onNext("Hello")
-{% endhighlight %}
-
-{% highlight swift %}
-//^ Is actually a convenience method of:
-observer.on(.Next("Hello"))
 {% endhighlight %}
 
 An `Observable`'s time of work is also called a **sequence**. Throughout it's sequence it can send an infinite number of elements and we use the `onNext` method to emit these.
 
 {% highlight swift %}
 observer.onCompleted()
-{% endhighlight %}
-
-{% highlight swift %}
-//^ Again a convenience method, the Error event has the same
-observer.on(.Completed)
 {% endhighlight %}
 
 When it's finished it can send a `Completed` or `Error` event, after which it cannot produce more elements and it releases the closure along with it's references.
@@ -87,17 +77,19 @@ return NopDisposable.instance
 Each `Observable` has to return a `Disposable`.
 
 Use `NopDisposable.instance` if you don't need to dispose of anything. 
-If you look into the [`NopDisposable`](https://github.com/ReactiveX/RxSwift/blob/master/RxSwift/Disposables/NopDisposable.swift) implementation it does completely nothing - just empty methods. The `Disposable` that needs to be returned is used to  clean up the `Observable` if it doesn't have a chance to complete the work normally. For example you can use the `AnonymousDisposable`:
+If you look into the [`NopDisposable`](https://github.com/ReactiveX/RxSwift/blob/master/RxSwift/Disposables/NopDisposable.swift) implementation it does completely nothing - just empty methods. 
+
+The `Disposable` that needs to be returned is used to  clean up the `Observable` if it doesn't have a chance to complete the work normally. For example you can use the `AnonymousDisposable`:
 
 {% highlight swift %}
 return AnonymousDisposable {
-	  connection.close()
-      database.closeImportantSomething()
-      cache.clear()
+    connection.close()
+    database.closeImportantSomething()
+    cache.clear()
 }
 {% endhighlight %}
 
-It'll be called only when disposed of prematurely: when an observer gets deallocated, or dispose is called manually - we'll talk about disposing later.
+The `Disposable` is called only when an `Observer` is disposed of prematurely: when it gets deallocated, or `dispose()` is called manually. Most of the times the `dispose()` is called automatically thanks to **Dispose Bags**.
 
 ### Observer 🕵
 
@@ -123,14 +115,18 @@ Hello dummy 🐣
 
 `subscribeNext` will only react to `Next` events. You can also use `subscribeCompleted` and `subscribeError`. These all are also convenience methods of a `subscribe` method. I suggest always using the convenience methods.
 
+#### Dispose Bag 🗑
+
 The only cryptic thing here is the `addDisposableTo` method.
 
 >Dispose bags are used to return ARC like behavior to RX.
 >When a DisposeBag is deallocated, it will call dispose on each of the added disposables.            
 
-You add the `Disposable`s you create when you subscribe to the bag. When the bag's `deinit` is called the `Disposable`s in the bag get disposed off - it's that simple.
+You add the `Disposable`s you create when you subscribe to the bag. When the bag's `deinit` is called the `Disposable`s (subscriptions) that didn't finish will be disposed of.
 
-It's used to dispose of old references that you pass in the closure and resources that are not needed anymore: for example an open HTTP connection.
+It's used to dispose of old references that you pass in the closure and resources that are not needed anymore: for example an open HTTP connection, a database connection or a cache.
+
+If you don't understand now, don't worry, a concrete example is coming.
 
 ### Observable operators
 
@@ -194,7 +190,7 @@ This is fun 🙄
 
 `repeat` repeats a given value infinitely. Again, you can control the threading behavior with a `SchedulerType`.
 
-As you probably noticed, these are not very exciting, but it's good to know that there are other operators. One more important thing to notice is that it's start of the *functional* part of RxSwift.
+As you probably noticed, these are not very exciting, but it's good to know that there are other operators. One more important thing to notice is that it's a start of the *functional* part of RxSwift.
 
 ### Real life example
 
@@ -280,19 +276,27 @@ Amazing, huh? No protocols, no delegates, just a declarative definition of what 
 
 Don't forget about `[weak self]` or `[unowned self]` in the closure to avoid retain cycles.
 
+There's a more reactive way to implement setting the text that's called *binding*, but we're too 🐣 to get into that now.
+
+#### Dispose Bag Example
+
 {% highlight swift %}
 class ViewController: UIViewController {
     
 let disposeBag = DisposeBag()
 {% endhighlight %}
 
-When the view controller gets deinitialized, it will also release the `disposeBag`. If the `disposeBag` is released, the `Disposable` will be called and the data task will be cancelled if it didn't have a chance to finish! I hope this clearly explains the mechanism of dispose bags.
+When the view controller gets deinitialized, it will also release the `disposeBag`.
 
-There's a more reactive way to implement setting the text that's called *binding*, but we'll cover that in one of the next parts of tutorial focused on `Subject`s.
+If the `disposeBag` is released, it's `deinit` will be called and our `AnonymousDisposable` will be called on our `Observable` and the data task will be cancelled and the connection will be closed if it didn't have a chance to finish! 
 
-This wraps it up. You've learned how to create observables and observers, how disposing works and hopefully you can see how this is better than the usual observer patterns. 
+I hope this clearly explains the mechanism of dispose bags.
 
-Hang tight for the next part of the tutorial which will be about functional operators in RxSwift.
+### That's it!
+
+This wraps it up. You've learned how to create observables and observers, how disposing works and hopefully you can see how this is better than the usual observer patterns.
+
+Hang tight for the next part of the tutorial which will be about functional operators, the whole *functional* part in RxSwift.
 
 
 
