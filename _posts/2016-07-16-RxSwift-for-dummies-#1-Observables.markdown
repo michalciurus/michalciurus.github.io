@@ -186,7 +186,7 @@ This is fun 🙄
 This is fun 🙄
 This is fun 🙄
 ...
-{% endhiglight %}
+{% endhighlight %}
 
 `repeat` repeats a given value infinitely. Again, you can control the threading behavior with a `SchedulerType`.
 
