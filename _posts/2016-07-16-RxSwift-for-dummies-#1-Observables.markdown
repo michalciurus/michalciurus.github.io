@@ -49,7 +49,7 @@ let observable = Observable<String>.create { (observer) -> Disposable in
 
 Ok, we have an `Observable`. This is a **cold** ❄️ observable: it will start executing only when an observer subscribes. A **hot** 🔥 observable executes even if it doesn't have any observers. 
 
-So to emphasize: the `Hello dummy 🐣` value will not be emitted just because you instantiated an `Observable` object.
+We'll cover the difference and examples in the next parts, so don't worry, but for now you have to understand that: the `Hello dummy 🐣` value will not be emitted just because you instantiated an ❄️`Observable` object. The ❄️`Observable` is frozen and **will start executing only when you add an observer**.
 
 Let's analyze step by step what's happening:
 {% highlight swift %}
