@@ -292,7 +292,7 @@ There's a more **reactive** way to implement setting the text that's called *bin
 
 #### Dispose Bag Example
 
-As you might've notice the `disposeBag` is an instance variable of our `ViewController`:
+As you might've noticed, the `disposeBag` is an instance variable of our `ViewController`:
 
 {% highlight swift %}
 class ViewController: UIViewController {
