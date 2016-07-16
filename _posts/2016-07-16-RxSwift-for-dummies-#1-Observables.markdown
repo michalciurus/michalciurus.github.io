@@ -93,7 +93,7 @@ The `Disposable` is called only when an `Observer` is disposed of prematurely: w
 
 ### Observer 🕵
 
-Our `Observable` ❄️ is cold. It won't start executing until we start observing it.
+Our `Observable` is cold ❄️. It won't start executing until we start observing it.
 
 {% highlight swift %}
 let disposeBag = DisposeBag()
@@ -113,7 +113,7 @@ The `Observable` has started work and after 10 seconds you'll see this printed o
 Hello dummy 🐣
 {% endhighlight %}
 
-`subscribeNext` will only react to `Next` events. You can also use `subscribeCompleted` and `subscribeError`. These all are also convenience methods of a `subscribe` method. I suggest always using the convenience methods.
+`subscribeNext` will only react to `Next` events. You can also use `subscribeCompleted` and `subscribeError`.
 
 #### Dispose Bag 🗑
 
@@ -276,9 +276,11 @@ Amazing, huh? No protocols, no delegates, just a declarative definition of what 
 
 Don't forget about `[weak self]` or `[unowned self]` in the closure to avoid retain cycles.
 
-There's a more reactive way to implement setting the text that's called *binding*, but we're too 🐣 to get into that now.
+There's a more **reactive** way to implement setting the text that's called *binding*, but we're too 🐣 to get into that now.
 
 #### Dispose Bag Example
+
+As you might've notice the `disposeBag` is an instance variable of our `ViewController`:
 
 {% highlight swift %}
 class ViewController: UIViewController {
