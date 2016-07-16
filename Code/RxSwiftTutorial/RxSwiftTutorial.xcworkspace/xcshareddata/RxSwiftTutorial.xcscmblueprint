@@ -1,0 +1,28 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "32FE7A32D7022893942454DA8374E0272EEBA5D2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "32FE7A32D7022893942454DA8374E0272EEBA5D2" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9800373F-0EA5-40F7-9B80-F7CCF7CF5755",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "32FE7A32D7022893942454DA8374E0272EEBA5D2" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "RxSwiftTutorial",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Code\/RxSwiftTutorial\/RxSwiftTutorial.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/michalciurus\/michalciurus.github.io.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "32FE7A32D7022893942454DA8374E0272EEBA5D2"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/michalciurus\/michalciurus.github.io.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "32FE7A32D7022893942454DA8374E0272EEBA5D2"
+    }
+  ]
+}

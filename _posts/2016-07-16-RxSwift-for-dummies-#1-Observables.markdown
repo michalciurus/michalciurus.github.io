@@ -210,12 +210,16 @@ final class GoogleModel {
             let session = NSURLSession.sharedSession()
             let task = session.dataTaskWithURL(NSURL(string:"https://www.google.com")!) { (data, response, error) in
                 
+                // We want to update the observer on the UI thread
                 dispatch_async(dispatch_get_main_queue(), {
                     if let err = error {
+                        // If there's an error, send an Error event and finish the sequence
                         observer.onError(err)
                     } else {
                         let googleString = NSString(data: data!, encoding: NSASCIIStringEncoding) as String?
+                        //Emit the fetched element
                         observer.onNext(googleString!)
+                        //Complete the sequence
                         observer.onCompleted()
                     }
                 })
@@ -225,6 +229,7 @@ final class GoogleModel {
             task.resume()
             
             return AnonymousDisposable {
+                //Cancel the connection if disposed
                 task.cancel()
             }
         })
@@ -257,6 +262,9 @@ import RxSwift
 
 class ViewController: UIViewController {
     
+    //The usual way to create dispose bags
+    //When the view controller is deallocated the dispose bag
+    //Will be released and will call dispose() on it's Disposables/Subscriptions
     let disposeBag = DisposeBag()
     let model = GoogleModel()
     
@@ -265,9 +273,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Remember about [weak self]/[unowned self] to prevent retain cycles!
         model.createGoogleDataObservable().subscribeNext { [weak self] (element) in
             self?.googleText.text = element
         }.addDisposableTo(disposeBag)
+        
     }
 }
 {% endhighlight %}
