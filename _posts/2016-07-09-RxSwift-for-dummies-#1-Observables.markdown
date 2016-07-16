@@ -10,7 +10,7 @@ It takes a couple of hours to get used to the idea, but when you do, you don't w
 
 UI programming is mostly about reacting to some asynchronous tasks. We're taught to implement that with observer patterns: I'm pretty sure you're familiar with delegates by now. Delegating is a cool pattern, but it gets really tiring...
 
-{: .center-image }
+{: .center}
 ![Crying](images/cry.jpg)
 
 * Delegating is a lot of boilerplate code: creating a protocol, creating a delegate variable, implementing protocol, setting the delegate
