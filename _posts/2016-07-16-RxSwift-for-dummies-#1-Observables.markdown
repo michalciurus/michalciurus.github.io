@@ -79,6 +79,8 @@ Each `Observable` has to return a `Disposable`.
 Use `NopDisposable.instance` if you don't need to dispose of anything. 
 If you look into the [`NopDisposable`](https://github.com/ReactiveX/RxSwift/blob/master/RxSwift/Disposables/NopDisposable.swift) implementation it does completely nothing - just empty methods. 
 
+#### Disposable
+
 The `Disposable` that needs to be returned is used to  clean up the `Observable` if it doesn't have a chance to complete the work normally. For example you can use the `AnonymousDisposable`:
 
 {% highlight swift %}
