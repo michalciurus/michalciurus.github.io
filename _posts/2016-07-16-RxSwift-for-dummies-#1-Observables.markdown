@@ -56,7 +56,7 @@ Let's analyze step by step what's happening:
 dispatch_async(...)
 {% endhighlight %}
 
-The `Observable` executes code on the main thread (unless programmed otherwise) so let's use a simple `dispatch_async` to not block it.
+The `Observable` executes code on the main thread (unless programmed otherwise) so let's use a simple `dispatch_async` to not block it. RxSwift has a mechanism called *Schedulers* that we could use instead, but let's leave that for later when you're 🐔.
 
 {% highlight swift %}
 observer.onNext("Hello")
@@ -245,7 +245,7 @@ That's pretty simple: the `createGoogleDataObservable` creates an `Observable` w
 dispatch_async(dispatch_get_main_queue()...
 {% endhighlight %}
 
-The data task of `NSURLSession` is executed on a background thread, so we need to update Observers on the UI queue.
+The data task of `NSURLSession` is executed on a background thread, so we need to update Observers on the UI queue. Remember that we could use *schedulers*, but I'll cover that in a more advanced stage.
 
 {% highlight swift %}
 return AnonymousDisposable {
