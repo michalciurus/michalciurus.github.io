@@ -81,7 +81,7 @@ If you look into the [`NopDisposable`](https://github.com/ReactiveX/RxSwift/blob
 
 #### Disposable
 
-The `Disposable` that needs to be returned is used to  clean up the `Observable` if it doesn't have a chance to complete the work normally. For example you can use the `AnonymousDisposable`:
+The `Disposable` that needs to be returned in the `Observable` is used to  clean up the `Observable` if it doesn't have a chance to complete the work normally. For example you can use the `AnonymousDisposable`:
 
 {% highlight swift %}
 return AnonymousDisposable {
