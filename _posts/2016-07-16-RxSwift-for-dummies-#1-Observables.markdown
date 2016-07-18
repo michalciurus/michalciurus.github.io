@@ -4,9 +4,9 @@ title: RxSwift For Dummies 🐣 Part 1
 
 **Functional Reactive Programming** is one of those things you have to try yourself to really start appreciating. It's the one piece of the puzzle that I was missing to glue all the patterns like MVVM, VIPER, [Coordinators/Routing](http://khanlou.com/2015/10/coordinators-redux/).
 
-If you don't know what **FRP** is, don't worry for now - you'll be able to discover it yourself.
+If you don't know what **FRP** is, don't worry for now - you'll be able to discover it yourself in this tutorial.
 
-Digging through [RxSwift](https://github.com/ReactiveX/RxSwift) made me feel enlightened and saved, but also massively confused.
+Digging through [RxSwift](https://github.com/ReactiveX/RxSwift) made me feel enlightened and saved, but also massively confused. Trust me, you'll feel the same.
 
 It takes a couple of hours to get used to the idea, but when you do, you don't want to go back.
 
@@ -56,7 +56,7 @@ Let's analyze step by step what's happening:
 dispatch_async(...)
 {% endhighlight %}
 
-The `Observable` executes code on the main thread (unless programmed otherwise) so let's use a simple `dispatch_async` to not block it. RxSwift has a mechanism called *Schedulers* that we could use instead, but let's leave that for later when you're 🐔.
+The `Observable` executes code on the main thread (unless programmed otherwise) so let's use a simple `dispatch_async` to not block it. RxSwift has a mechanism called *Schedulers* that we could use instead, but let's leave that for later when you're less of a dummy 🐔.
 
 {% highlight swift %}
 observer.onNext("Hello")
