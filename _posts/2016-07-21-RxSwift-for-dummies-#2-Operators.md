@@ -63,7 +63,7 @@ let observable = Observable<String>.create { (observer) -> Disposable in
 }.observeOn(MainScheduler.instance)
 {% endhighlight %}
 
-We remove the `dispatch_async(dispatch_get_main_queue()` and add `.observeOn(MainScheduler.instance)`. This causes all events to be sent to observers through the main queue - it's that simple. The `Hello dummy 🐣` element can be safely used to set an UI element, because we're certain that it'll be passed on the main queue:
+We remove the `dispatch_async(dispatch_get_main_queue()` and add `.observeOn(MainScheduler.instance)`. This causes all events to be sent to observers through the main queue - it's that simple. The `Hello dummy 🐥` element can be safely used to set an UI element, because we're certain that it'll be passed on the main queue:
 
 {% highlight swift %}
 observable.subscribeNext { [weak self] (element) in
