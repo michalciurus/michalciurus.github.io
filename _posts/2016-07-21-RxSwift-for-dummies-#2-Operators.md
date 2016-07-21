@@ -8,15 +8,15 @@ Ok, we know the basics. Let's now try and inspect some interesting operators and
 
 Let's start with something I already mentioned, but didn't really explain: **schedulers**. 
 
-Schedulers are used to easily tell the `Observable`s and `Observer`s on which threads/queues should they send notifications.
+Schedulers are used to easily tell the observables and observers on which threads/queues should they send notifications.
 
-The most common operators you'll use are `ObserveOn` and `SubscribeOn`.
+The most common operators connected to schedulers you'll use are `observeOn` and `subscribeOn`.
 
-Normally the `Observable` will execute and send notifications on the same thread on which the `Observer` `Subscribe`s on.
+Normally the `Observable` will execute and send notifications on the same thread on which the observer subscribes on.
 
 #### ObserveOn
 
-`ObserveOn` specifies a scheduler on which the `Observable` will send the events to the `Observer`. **It doesn't change the scheduler (thread/queue) on which it executes**. 
+`observeOn` specifies a scheduler on which the `Observable` will send the events to the observer. **It doesn't change the scheduler (thread/queue) on which it executes**. 
 
 Let's take this example, very similar to the one from Part 1:
 
@@ -49,7 +49,7 @@ dispatch_async(dispatch_get_main_queue()...
 
 Then we need to change back to the main queue to update the UI. I'm sure you're familiar with this dance already.
 
-Let's refactor it using `ObserveOn`
+Let's refactor it using `observeOn`
 
 {% highlight swift %}
 let observable = Observable<String>.create { (observer) -> Disposable in
@@ -71,13 +71,13 @@ observable.subscribeNext { [weak self] (element) in
 }.addDisposableTo(disposeBag)
 {% endhighlight %}
 
-`ObserveOn` is probably the most common scheduler operator you'll use. You want the `Observable` to contain all the logic, threading etc. and you want your observer to be stupid and simple. Let's quickly investigate `SubscribeOn` though, at it might prove useful.
+`observeOn` is probably the most common scheduler operator you'll use. You want the `Observable` to contain all the logic, threading etc. and you want your observer to be stupid and simple. Let's quickly investigate `subscribeOn` though, at it might prove useful.
 
 #### SubscribeOn (Optional)
 
 This is a more advanced operator. You can skip it for now and come back later 🐤
 
-`SubscribeOn` is very similar to `ObserveOn` but **it also changes the scheduler on which the `Observable` will execute work**.
+`subscribeOn` is very similar to `observeOn` but **it also changes the scheduler on which the `Observable` will execute work**.
 
 {% highlight swift %}
 
@@ -94,7 +94,7 @@ let observable = Observable<String>.create { (observer) -> Disposable in
 
 {% endhighlight %}
 
-As you can see I deleted the `dispatch_async(dispatch_get_global_queue...` in the `Observable` and it's the observer that tells the `Observable` to execute on a global queue to not block UI. This of course leads to an exception being thrown because as I mentioned: it causes the `Observable` to work on a global queue, but also **send events on a global queue, not on the UI queue**. We could just add a `dispatch_async` on the main queue, but we can also experiment, do something more interesting and add a `ObserveOn` operator.
+As you can see I deleted the `dispatch_async(dispatch_get_global_queue...` in the `Observable` and it's the observer that tells the `Observable` to execute on a global queue to not block UI. This of course leads to an exception being thrown because as I mentioned: it causes the `Observable` to work on a global queue, but also **send events on a global queue, not on the UI queue**. We could just add a `dispatch_async` on the main queue, but we can also experiment, do something more interesting and add a `observeOn` operator.
 
 {% highlight swift %}
 
@@ -111,17 +111,17 @@ let observable = Observable<String>.create { (observer) -> Disposable in
 
 {% endhighlight %}
 
-After adding `.observeOn(MainScheduler.instance)` to the `Observable` we notice that it solved our problem. Why is it interesting? Because it shows that `ObserveOn` has overrides `SubscribeOn` in terms of which scheduler is used to send events!
+After adding `.observeOn(MainScheduler.instance)` to the `Observable` we notice that it solved our problem. Why is it interesting? Because it shows that `observeOn` overrides `subscribeOn` in terms of which scheduler is used to send events!
 
-When do we use `ObserveOn`? The most common scenario would be an `Observable` that doesn't execute long tasks (fetching data, calculating etc.) on a different queue/thread and blocks your thread. I don't imagine that will happen too often, but hey! it's always worth to know what tools you have in your box 🛠
+When do we use `observeOn`? The most common scenario would be an `Observable` that doesn't execute long tasks (fetching data, calculating etc.) on a different queue/thread and blocks your thread. I don't imagine that will happen too often, but hey! it's always worth to know what tools you have in your box 🛠
 
 ### Scheduler Types
 
-As a RxSwift beginner it's fine to stick with `ObserveOn` and `MainScheduler.instance` so I'm going to cut here to not distract you too much. You can build your own `Scheduler` or use one of the already built in ones. [Here's more](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Schedulers.md) if you're really that curious. It's quite simple and natural as it's just wrapped Grand Central Dispatch and `NSOperation`.
+As a RxSwift beginner it's fine to stick with `observeOn` and `MainScheduler.instance` so I'm going to cut here to not distract you too much. You can build your own `Scheduler` or use one of the already built in ones. [Here's more](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Schedulers.md) if you're that curious. It's quite simple and natural as it's just wrapped Grand Central Dispatch and `NSOperation`.
 
 ### Transforming Operators
 
-Ok, so you already know two types of operators: creating operators (`create`, `interval`, `just`) and utility operators (`observeOn`, `subscribeOn`).
+Ok, so you already know two types of operators: creating operators (`create`, `interval`, `just`) and utility operators (`observeOn`, `subscribeOn`). Let's inspect some of the transforming operators.
 
 #### Map
 
@@ -156,8 +156,6 @@ This example will print:
 true
 {% endhighlight %}
 
-If you're familiar with the Swift's `map`, then this operator should already be more than familiar to you.
-
 #### Scan
 
 `scan` is more complicated. 
@@ -172,7 +170,6 @@ let observable = Observable<String>.create { (observer) -> Disposable in
     observer.onNext("Y")
     return NopDisposable.instance
 }
-
 
 observable.scan("") { (lastValue, currentValue) -> String in
 	// The new value emmited is the LAST value emmited + current value:
@@ -403,9 +400,9 @@ let observable2 = Observable<String>.create { (observer) -> Disposable in
 
 There's a lot of other interesting operators like `reduce`, or `takeUntil`, but I think you get the idea by now and you'll be easily capable to [discover them by yourself](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/API.md). The idea was to see how powerful they are and how easily and fast you're able to mold the sequences in terms of time, conditions or transformations.
 
-### Combining Operators
+### Mixing Operators
 
-This tutorial doesn't need a concrete example project, but it can be useful to show you how easily you can combine operators.
+This tutorial doesn't need a concrete example project, but it can be useful to show you how easily you can mix operators.
 
 Let's do this with a crazy idea: to change background color based on the current time.
 
@@ -443,9 +440,9 @@ Observable<NSDate>.create { (observer) -> Disposable in
 
 You can find more examples in the [RxSwfit playgrounds](https://github.com/ReactiveX/RxSwift/blob/master/Rx.playground/Pages/Combining_Operators.xcplaygroundpage/Contents.swift).
 
+### That's it!
 
-
-
+Wow, you really know a lot now! The only big thing left to teach you are **Subjects**. I know you must be hungry for some practical examples, but don't worry, they're coming!
 
 
 
