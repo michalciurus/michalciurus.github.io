@@ -117,7 +117,7 @@ When do we use `observeOn`? The most common scenario would be an `Observable` th
 
 #### Scheduler Types
 
-As a RxSwift beginner it's fine to stick with `observeOn` and `MainScheduler.instance` so I'm going to cut here to not distract you too much. You can build your own `Scheduler` or use one of the already built in ones. [Here's more](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Schedulers.md) if you're that curious. It's quite simple and natural as it's just wrapped Grand Central Dispatch and `NSOperation`.
+As a RxSwift beginner it's fine to stick with `observeOn` and `MainScheduler.instance` so I'm going to cut here to not distract you too much. You can build your own custom `Scheduler` or use one of the already built in ones. [Here's more](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Schedulers.md) if you're that curious. It's quite simple and natural as it's just wrapped Grand Central Dispatch and `NSOperation`.
 
 ### Transforming Operators
 
