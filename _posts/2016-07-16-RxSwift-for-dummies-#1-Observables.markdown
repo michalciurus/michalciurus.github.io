@@ -27,9 +27,42 @@ RxSwift takes care of that and more! It enables you to create observer patterns 
 
 I've just started a project and I didn't create one delegate and I'm a happy, happy man 🐸
 
-### Observable 📡
+### Basic Example
 
 Ok, enough talking, let's get to it, but let's start simple.
+
+{% highlight swift %}
+class ExampleClass {
+    let disposeBag = DisposeBag()
+    
+    func runExample() {
+        
+        // OBSERVABLE //
+        
+        let observable = Observable<String>.create { (observer) -> Disposable in
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                // Simulate some work
+                NSThread.sleepForTimeInterval(10)
+                observer.onNext("Hello dummy 🐣")
+                observer.onCompleted()
+            })
+            
+            return NopDisposable.instance
+        }
+        
+        // OBSERVER //
+        
+        observable.subscribeNext { (element) in
+            print(element)
+        }.addDisposableTo(disposeBag)
+    }
+}
+{% endhighlight %}
+
+Here's a basic example. We have a `runExample` method that does something with RxSwift when called. Let's try to understand what's happening here.
+
+### Observable 📡
 
 Let's start from the basic building block in RxSwift: the `Observable`. It's actually pretty simple: the `Observable` does some work and observers can react to it.
 
@@ -44,7 +77,11 @@ let observable = Observable<String>.create { (observer) -> Disposable in
     })
     
     return NopDisposable.instance
-} 
+}
+
+observable.subscribeNext { (element) in
+  print(element)
+}.addDisposableTo(disposeBag)
 {% endhighlight %}
 
 Ok, we have an `Observable`. This is a **cold** ❄️ observable: it will start executing only when an observer subscribes. A **hot** 🔥 observable executes even if it doesn't have any observers. 
@@ -91,7 +128,7 @@ return AnonymousDisposable {
 }
 {% endhighlight %}
 
-The `Disposable` is called only when an `Observer` is disposed of prematurely: when it gets deallocated, or `dispose()` is called manually. Most of the times the `dispose()` is called automatically thanks to **Dispose Bags**.
+The `Disposable` is called only when an `Observer` is disposed of prematurely: when it gets deallocated, or `dispose()` is called manually. Most of the times the `dispose()` is called automatically thanks to **Dispose Bags**. A little lost? Don't worry, you'll be able to implement that yourself on a more concrete example.
 
 ### Observer 🕵
 
@@ -124,11 +161,11 @@ The only cryptic thing here is the `addDisposableTo` method.
 >Dispose bags are used to return ARC like behavior to RX.
 >When a DisposeBag is deallocated, it will call dispose on each of the added disposables.            
 
-You add the `Disposable`s you create when you subscribe to the bag. When the bag's `deinit` is called the `Disposable`s (subscriptions) that didn't finish will be disposed of.
+You add the `Disposable`s you create when you subscribe to the bag. When the bag's `deinit` is called (for example when the `ExampleClass` object gets deallocated) the `Disposable`s (subscriptions) that didn't finish will be disposed of.
 
 It's used to dispose of old references that you pass in the closure and resources that are not needed anymore: for example an open HTTP connection, a database connection or a cache.
 
-If you don't understand now, don't worry, a concrete example is coming.
+If you don't understand now, don't worry, a better example is coming.
 
 ### Observable operators
 
