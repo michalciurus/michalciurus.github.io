@@ -10,7 +10,7 @@ Digging through [RxSwift](https://github.com/ReactiveX/RxSwift) made me feel enl
 
 It takes a couple of hours to get used to the idea, but when you do, you don't want to go back.
 
-In this tutorial, I'll try to save you these precious hours by explaining everything step by step... You know, like to a dummy 😙
+In this tutorial, I'll try to save you these precious hours by explaining everything step by step... You know, like to a dummy.
 
 ### The Why?
 
@@ -25,7 +25,7 @@ UI programming is mostly about reacting to some asynchronous tasks. We're taught
 
 RxSwift takes care of that and more! It enables you to create observer patterns in a declarative way (reduces cognitive load) and without any boilerplate code.
 
-I've just started a project and I didn't create one delegate and I'm a happy, happy man 🐸
+I've just started a project, I didn't create *one* delegate.
 
 ### Basic Example
 
@@ -132,7 +132,7 @@ The `Disposable` is called only when an `Observer` is disposed of prematurely: w
 
 ### Observer 🕵
 
-Our `Observable` is cold ❄️. It won't start executing until we start observing it.
+Our `Observable` is *cold* ❄️. It won't start executing until we start observing it.
 
 {% highlight swift %}
 let disposeBag = DisposeBag()
@@ -350,16 +350,3 @@ I hope this clearly explains the mechanism of dispose bags.
 This wraps it up. You've learned how to create observables and observers, how disposing works and hopefully you can see how this is better than the usual observer patterns.
 
 Hang tight for the next part of the tutorial which will be about functional operators, the whole *functional* part in RxSwift.
-
-
-
-
-
-
-
-
-
-
-
-
-
