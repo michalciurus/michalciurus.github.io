@@ -8,7 +8,7 @@ Ok, we know the basics. Let's now try and inspect some interesting operators and
 
 Let's start with something I already mentioned, but didn't really explain: **schedulers**. 
 
-Schedulers are used to easily tell the observables and observers on which threads/queues should they send notifications.
+Schedulers are used to easily tell the observables and observers on which threads/queues should they execute, or send notifications.
 
 The most common operators connected to schedulers you'll use are `observeOn` and `subscribeOn`.
 
