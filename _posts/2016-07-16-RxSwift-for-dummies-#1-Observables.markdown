@@ -10,7 +10,7 @@ Digging through [RxSwift](https://github.com/ReactiveX/RxSwift) made me feel enl
 
 It takes a couple of hours to get used to the idea, but when you do, you don't want to go back.
 
-In this tutorial, I'll try to save you these precious hours by explaining everything step by step... You know, like to a dummy.
+In this tutorial, I'll try to save you these precious hours by explaining everything step by step... You know, like to a dummy 😜
 
 ### The Why?
 
