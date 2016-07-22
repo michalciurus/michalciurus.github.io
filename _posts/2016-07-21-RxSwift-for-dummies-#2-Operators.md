@@ -2,7 +2,7 @@
 title: RxSwift For Dummies 🐥 Part 2
 ---
 
-Ok, we covered the RxSwift basics in [Part 1](http://swiftpearls.com/RxSwift-for-dummies-1-Observables.html) Let's now try and inspect some interesting operators and discover the **F**unctional in **FRP**.
+Ok, we covered the RxSwift basics in [Part 1](http://swiftpearls.com/RxSwift-for-dummies-1-Observables.html). Let's now try and inspect some interesting operators and discover the **F**unctional in **FRP**.
 
 ### Schedulers
 
