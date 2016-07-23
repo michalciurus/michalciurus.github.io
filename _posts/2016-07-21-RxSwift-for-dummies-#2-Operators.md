@@ -237,7 +237,7 @@ Of course, there are more transforming operators, but I think you get the idea n
 
 ### Filtering Operators
 
-It's important to emit values, but it's also important to skip emitting them when needed - that's what fitering operators are for.
+It's important to emit values, but it's also important to skip emitting them when needed - that's what filtering operators are for.
 
 #### Filter
 
