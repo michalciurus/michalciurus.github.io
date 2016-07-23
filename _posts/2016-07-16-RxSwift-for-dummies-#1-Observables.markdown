@@ -4,7 +4,7 @@ title: RxSwift For Dummies 🐣 Part 1
 
 **Functional Reactive Programming** is one of those things you have to try yourself to really start appreciating. It's the one piece of the puzzle that I was missing to glue all the patterns like MVVM, VIPER, [Coordinators/Routing](http://khanlou.com/2015/10/coordinators-redux/).
 
-If you don't know what **FRP** is, don't worry for now - you'll be able to discover it yourself in this tutorial.
+If you don't know what **FRP** is, don't worry for now - you'll be able to discover it yourself in this tutorial. You'll gradually learn what **F**unctional and **R**eactive mean in the **FRP**.
 
 Digging through [RxSwift](https://github.com/ReactiveX/RxSwift) made me feel enlightened and saved, but also massively confused. Trust me, you'll feel the same.
 
