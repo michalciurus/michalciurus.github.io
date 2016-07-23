@@ -35,7 +35,7 @@ let observable = Observable<String>.create { (observer) -> Disposable in
 }
 {% endhighlight %}
 
-Let's assume that the observer is some kind of UI - `UIViewController` or `UIView`.
+Let's assume that the observer is some kind of UI - `UIViewController` or `UIView`. 
 
 {% highlight swift %}
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -47,7 +47,7 @@ We're dispatching the work to a background queue, to not block the UI.
 dispatch_async(dispatch_get_main_queue()...
 {% endhighlight %}
 
-Then we need to change back to the main queue to update the UI. I'm sure you're familiar with this dance already.
+Then we need to change back to the main queue to update the UI. I hope that you remember that UIKit requires you to update UI elements from the main thread, if you do I'm sure you're familiar with this dance already.
 
 Let's refactor it using `observeOn`
 
