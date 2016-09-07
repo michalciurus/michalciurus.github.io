@@ -2,7 +2,9 @@
 title: RxSwift For Dummies 🐣 Part 1
 ---
 
-**Functional Reactive Programming** is one of those things you have to try yourself to really start appreciating. It's the one piece of the puzzle that I was missing to glue all the patterns like MVVM, VIPER, [Coordinators/Routing](http://khanlou.com/2015/10/coordinators-redux/).
+**RxSwift** is one of those things you have to try yourself to really start appreciating. It's the one piece of the puzzle that I was missing to glue all the patterns like MVVM, VIPER, [Coordinators/Routing](http://khanlou.com/2015/10/coordinators-redux/).
+
+It's hard to express what RxSwift really is, because it does a lot. In general it serves as a great observer pattern with a mix of functional and reactive programming. It's important to say what it **isn't** and it isn't [Functional Reactive Programming](https://github.com/ReactiveCocoa/ReactiveCocoa/issues/1342) in it's original definition. It's heavily inspired on **FRP**, so we can say that it contains **R**eactive and **F**unctional features.
 
 If you don't know what **FRP** is, don't worry for now - you'll be able to discover it yourself in this tutorial. You'll gradually learn what **F**unctional and **R**eactive mean in the **FRP**.
 
@@ -43,7 +45,7 @@ class ExampleClass {
         
         let observable = Observable<String>.create { (observer) -> Disposable in
             
-            dispatch_async(dispatch_get_main_queue(), {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                 // Simulate some work
                 NSThread.sleepForTimeInterval(10)
                 observer.onNext("Hello dummy 🐣")
@@ -71,7 +73,7 @@ Let's start from the basic building block in RxSwift: the `Observable`. It's act
 {% highlight swift %}
 let observable = Observable<String>.create { (observer) -> Disposable in
     
-    dispatch_async(dispatch_get_main_queue(), {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
     	// Simulate some work
         NSThread.sleepForTimeInterval(10)
         observer.onNext("Hello dummy 🐣")
