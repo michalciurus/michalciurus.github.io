@@ -2,6 +2,8 @@
 title: RxSwift For Dummies 🐥 Part 2
 ---
 
+*TODO: Update to Swift 3.0/RxSwift 3.0. Just some minor syntax changes, everything else is still correct so feel free to explore*
+
 Ok, we covered the RxSwift basics in [Part 1](http://swiftpearls.com/RxSwift-for-dummies-1-Observables.html). Let's now try and inspect some interesting operators and discover the **F**unctional in **FRP**.
 
 ### Schedulers

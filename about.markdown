@@ -2,7 +2,7 @@
 layout: about
 title: accent
 author: Ankit Sultana
-permalink: /about
+permalink: http://michalciur.us
 ---
 
 Hi! My name is yourname!

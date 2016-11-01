@@ -2,6 +2,8 @@
 title: RxSwift For Dummies 🐣 Part 1
 ---
 
+*TODO: Update to Swift 3.0/RxSwift 3.0. Just some minor syntax changes, everything else is still correct so feel free to explore*
+
 **RxSwift** is one of those things you have to try yourself to really start appreciating. It's the one piece of the puzzle that I was missing to glue all the patterns like MVVM, VIPER, [Coordinators/Routing](http://khanlou.com/2015/10/coordinators-redux/).
 
 It's hard to express what RxSwift really is, because it does a lot. In general it serves as a great observer pattern with a mix of functional and reactive programming. It's important to say what it **isn't** and [it isn't Functional Reactive Programming](https://github.com/ReactiveCocoa/ReactiveCocoa/issues/1342) in it's original definition. It's heavily inspired on **FRP**, so we can say that it contains **R**eactive and **F**unctional features.
