@@ -4,9 +4,9 @@ title: RxSwift For Dummies 🐤 Part 3
 
 Let's learn about the next building block of RxSwift: **Subjects**
 
-We've learned about the `Observable`, right? I think we can all agree that when you have a reference to an `Observable` it's *output* only. You can subscribe to it's *output*, but you can't change it.
+We've talked about the `Observable`, right? I think we can all agree that when you have a reference to an `Observable` it's *output* only. You can subscribe to it's *output*, but you can't change it.
 
-A `Subject` is also an *output* but it's also an **input**! That means that you can **dynamically**/**imperatively** emit new elements in a sequence.
+A `Subject` is an *output*(`Observable`) but it's also an **input**! That means that you can **dynamically**/**imperatively** emit new elements in a sequence.
 
 {% highlight swift %}
 let subject = PublishSubject<String>()
@@ -236,13 +236,13 @@ As you can see we have a view model that exposes a `googleString` subject that v
 
 #### Bonus: Variable
 
-{% highlight swift %}
 There's one more thing missing if you want to totally violate the declarative nature of RxSwift: reading the last emitted value imperatively.
 
 That's where `Variable` comes in. `Variable` is just a simple wrapper over `BehaviorSubject`. It's very handy. 
 
 Let's say for example that we want to be able to access the "current" `googleString` at any time.
 
+{% highlight swift %}
 let googleString = Variable("currentString")
 
 //Getting the value
