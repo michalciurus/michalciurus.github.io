@@ -9,20 +9,20 @@ We've learned about the `Observable`, right? I think we can all agree that when 
 A `Subject` is also an *output* but it's also an **input**! That means that you can **dynamically**/**imperatively** emit new elements in a sequence.
 
 {% highlight swift %}
- let subject = PublishSubject<String>()
- 
- // As you can see the subject casts nicely, because it's an Observable subclass
- let observable : Observable<String> = subject
- 
- observable
-     .subscribe(onNext: { text in
-         print(text)
-     })
-     .addDisposableTo(disposeBag)
- 
- // You can call onNext any time you want to emit a new item in the sequence
- subject.onNext("Hey!")
- subject.onNext("I'm back!")
+let subject = PublishSubject<String>()
+
+// As you can see the subject casts nicely, because it's an Observable subclass
+let observable : Observable<String> = subject
+
+observable
+    .subscribe(onNext: { text in
+        print(text)
+    })
+    .addDisposableTo(disposeBag)
+
+// You can call onNext any time you want to emit a new item in the sequence
+subject.onNext("Hey!")
+subject.onNext("I'm back!")
 {% endhighlight %}
 
 `onNext` is the method you use to do the *input*.
@@ -234,7 +234,39 @@ final class GoogleModel {
 
 As you can see we have a view model that exposes a `googleString` subject that view controllers can subscribe to. We bind the observable to the subject, so when a reply from the server comes it'll emit it's value and it will get passed in the subject.
 
-Seems easy, but there's a lot of traps to watch out for and that's what we'll talk about in the next post. See you around!
+#### Bonus: Variable
+
+{% highlight swift %}
+There's one more thing missing if you want to totally violate the declarative nature of RxSwift: reading the last emitted value imperatively.
+
+That's where `Variable` comes in. `Variable` is just a simple wrapper over `BehaviorSubject`. It's very handy. 
+
+Let's say for example that we want to be able to access the "current" `googleString` at any time.
+
+let googleString = Variable("currentString")
+
+//Getting the value
+print(googleString.value)
+
+//Setting the value
+googleString.value = "newString"
+
+//Observing the value
+googleString.asObservable()
+    .subscribe(onNext: { text in
+        print(text)
+})
+.addDisposableTo(disposeBag)
+{% endhighlight %}
+
+You'll learn to love it. It's like RxSwift in easy mode ☺️
+
+Seems easy, but there's a lot of traps to watch out for and that's what we'll talk about in the next post.
+
+I'll try to talk about common mistakes I did, best practices and how to use RxSwift safely.
+
+See you around! 🙋
+
 
 
 
