@@ -30,24 +30,25 @@ A `Subject` is also an *output* but it's also an **input**! That means that you 
 It will of course print:
 
 {% highlight text %}
-subject.onNext("Hey!")
-subject.onNext("I'm back!")
+"Hey!"
+"I'm back!"
 {% endhighlight %}
 
-Why do we need subjects? To easily connect the declarative/RxSwift world with the imperative/normal world. In a perfect, clean RxSwift implementation you [are discouraged to use subjects](https://github.com/ReactiveX/RxSwift/issues/487) - you should have a perfect stream of observables. Let's not bother our heads with it though, I'll explain that in a separate post, please use as much subjects as you want for now 😅
+Why do we need subjects? To easily connect the declarative/RxSwift world with the imperative/normal world. Subjects feel more "natural" to programmers used to imperative programming. 
+
+In a perfect, clean RxSwift implementation you [are discouraged to use subjects](https://github.com/ReactiveX/RxSwift/issues/487) - you should have a perfect stream of observables. Let's not bother our heads with it though, I'll explain that in a separate post, please use as much subjects as you want for now 😅
 
 So that's basically it! Let's learn to control subjects now.
 
 ### Hot🔥 vs Cold❄️
 
-I foreshadowed it in the first part. Now it's important to understand, because subjects are the first hot observables we're encountering.
+I foreshadowed it in the first part of the tutorial. Now it's important to grasp, because subjects are the first hot observables we're encountering.
 
 As we already established, when you create/declare an `Observable` using `create` it won't execute until there's an observer that observes on it. It'll start execution at the same moment something calls `subscribe` on it. That's why it's called a cold❄️ observable. If you don't remember you can take a quick look at [Part 1](http://swiftpearls.com/RxSwift-for-dummies-1-Observables.html)
 
 A hot🔥 observable will emit it's elements even it if has no observers. And that's exactly what subjects do. 
 
 {% highlight swift %}
-
  let subject = PublishSubject<String>()
  let observable : Observable<String> = subject
  // the observable is not being observed yet, so this value will not be caught by anything and won't be printed
@@ -61,7 +62,6 @@ A hot🔥 observable will emit it's elements even it if has no observers. And th
  
  // This is called when there's 1 observer so it will be printed
  subject.onNext("🎉🎉🎉")
- 
  {% endhighlight %}
 
 Pretty straightforward, huh? If you understood the cold observable in Part 1, hot observable should give you no problems as it's more intuitive/natural.
@@ -95,21 +95,21 @@ You use it when you're just interested in future values.
 Replay subject will repeat last **N** number of values, even the ones before the subscription happened. The **N** is the buffer, so for our example it's `3`:
 
 {% highlight swift %}
- let subject = ReplaySubject<String>().create(bufferSize: 3)
- let observable : Observable<String> = subject
- 
- subject.onNext("Not printed!")
- subject.onNext("Printed!")
- subject.onNext("Printed!")
- subject.onNext("Printed!")
+let subject = ReplaySubject<String>().create(bufferSize: 3)
+let observable : Observable<String> = subject
 
- observable
-     .subscribe(onNext: { text in
-         print(text)
-     })
-     .addDisposableTo(disposeBag)
- 
- subject.onNext("Printed!")
+subject.onNext("Not printed!")
+subject.onNext("Printed!")
+subject.onNext("Printed!")
+subject.onNext("Printed!")
+
+observable
+    .subscribe(onNext: { text in
+        print(text)
+    })
+    .addDisposableTo(disposeBag)
+
+subject.onNext("Printed!")
 {% endhighlight %}
 
 You use it when you're interested in **all** values of the subjects lifetime.
@@ -142,38 +142,38 @@ You use it when you just need to know the last value, for example the array of e
 You can bind an `Observable` to a `Subject`. It means that the `Observable` will pass all it's values in the sequence to the `Subject`
 
 {% highlight swift %}
- let subject = PublishSubject<String>()
- let observable = Observable<String>.just("I'm being passed around 😲")
- 
- subject
-     .subscribe(onNext: { text in
-         print(text)
-     })
-     .addDisposableTo(disposeBag)
- 
- observable
-     //Passing all values including errors/completed
-     .subscribe { (event) in
-         subject.on(event)
- }
- .addDisposableTo(disposeBag)
+let subject = PublishSubject<String>()
+let observable = Observable<String>.just("I'm being passed around 😲")
+
+subject
+    .subscribe(onNext: { text in
+        print(text)
+    })
+    .addDisposableTo(disposeBag)
+
+observable
+    //Passing all values including errors/completed
+    .subscribe { (event) in
+        subject.on(event)
+}
+.addDisposableTo(disposeBag)
 {% endhighlight %}
 
 There's sugar syntax to simplify it a little bit called `bindTo`:
 
 {% highlight swift %}
- let subject = PublishSubject<String>()
- let observable = Observable<String>.just("I'm being passed around 😲")
- 
- subject
-     .subscribe(onNext: { text in
-         print(text)
-     })
-     .addDisposableTo(disposeBag)
- 
- observable
- .bindTo(subject)
- .addDisposableTo(disposeBag)
+let subject = PublishSubject<String>()
+let observable = Observable<String>.just("I'm being passed around 😲")
+
+subject
+    .subscribe(onNext: { text in
+        print(text)
+    })
+    .addDisposableTo(disposeBag)
+
+observable
+.bindTo(subject)
+.addDisposableTo(disposeBag)
 {% endhighlight %}
 
 It will of course print `I'm being passed around 😲`. 
