@@ -238,7 +238,7 @@ As you can see we have a view model that exposes a `googleString` subject that v
 
 There's one more thing missing if you want to totally violate the declarative nature of RxSwift: reading the last emitted value imperatively.
 
-That's where `Variable` comes in. `Variable` is just a simple wrapper over `BehaviorSubject`. It's very handy. 
+That's where `Variable` comes in. `Variable` is just a simple wrapper over `BehaviorSubject`. [Feel free to take a look yourself](https://github.com/ReactiveX/RxSwift/blob/master/RxSwift/Subjects/Variable.swift) - the implementation is really easy. It's very handy. 
 
 Let's say for example that we want to be able to access the "current" `googleString` at any time.
 
