@@ -4,7 +4,7 @@ title: RxSwift For Dummies 🐤 Part 3
 
 Let's learn about the next building block of RxSwift: **Subjects**
 
-We've talked about the `Observable`, right? I think we can all agree that when you have a reference to an `Observable` it's *output* only. You can subscribe to it's *output*, but you can't change it.
+I think we can agree that when you have a reference to an `Observable` it's *output* only. You can subscribe to it's *output*, but you can't change it.
 
 A `Subject` is an *output*(`Observable`) but it's also an **input**! That means that you can **dynamically**/**imperatively** emit new elements in a sequence.
 
@@ -42,7 +42,7 @@ So that's basically it! Let's learn to control subjects now.
 
 ### Hot🔥 vs Cold❄️
 
-I foreshadowed it in the first part of the tutorial. Now it's important to grasp, because subjects are the first hot observables we're encountering.
+I mentioned the Hot🔥 vs Cold❄️ in the first part of the tutorial. Let's get into it in more detail now, because subjects are actually the first hot observables we're encountering.
 
 As we already established, when you create/declare an `Observable` using `create` it won't execute until there's an observer that observes on it. It'll start execution at the same moment something calls `subscribe` on it. That's why it's called a cold❄️ observable. If you don't remember you can take a quick look at [Part 1](http://swiftpearls.com/RxSwift-for-dummies-1-Observables.html)
 
