@@ -1,5 +1,5 @@
 ---
-title: RxSwift For Dummies 🐥 Part 3
+title: RxSwift For Dummies 🐤 Part 3
 ---
 
 Let's learn about the next building block of RxSwift: **Subjects**
