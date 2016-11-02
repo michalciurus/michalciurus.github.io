@@ -51,7 +51,7 @@ We would expect it to print `2` and `2`, right? Wrong. It prints `2`, `3`, becau
 
 It means that if you put a network request inside, it **would execute two times**!
 
-How do we fix this? By turning the cold observable into a hot one 💡! We do this using `publish`, `connect`/`refCount` operators. Here's a whole [tutorial explaining this in detail](http://www.tailec.com/blog/understanding-publish-connect-refcount-share) explaining it in detail.
+How do we fix this? By turning the cold observable into a hot one 💡! We do this using `publish`, `connect`/`refCount` operators. Here's a whole [tutorial explaining this in detail](http://www.tailec.com/blog/understanding-publish-connect-refcount-share).
 
 {% highlight swift %}
 let observableWithSideEffect = Observable<Int>.create { (observer) -> Disposable in
@@ -81,7 +81,7 @@ observableWithSideEffect.connect()
 
 It'll print `2`, `2`.
 
-Most of time time it's enough if you just use the more high level `shareReplay` operator. It uses the `refCount` operator + `replay`.
+Most of time time it's enough if you just use the more high level `shareReplay` operator. It uses the `refCount` operator and `replay`. `refCount` is like `connect`, but it's managed automatically - it stars when there's at least one observer. `replay` is useful to emit some elements to observers "late to the party".
 
 {% highlight swift %}
 let observableWithSideEffect = Observable<Int>.create { (observer) -> Disposable in
@@ -103,8 +103,6 @@ observableWithSideEffect
 .addDisposableTo(disposeBag)
 
 {% endhighlight %}
-
-Unfortunately you have to keep that fact in mind, otherwise it can cause some very nice bugs in your code.
 
 ### Main Queue
 
