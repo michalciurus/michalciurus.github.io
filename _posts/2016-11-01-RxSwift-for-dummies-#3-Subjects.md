@@ -261,12 +261,7 @@ googleString.asObservable()
 
 You'll learn to love it. It's like RxSwift in easy mode ☺️
 
-Seems easy, but there's a lot of traps to watch out for and that's what we'll talk about in the next post.
-
-I'll try to talk about common mistakes I did, best practices and how to use RxSwift safely.
-
-See you around! 🙋
-
+Seems easy, but there's a lot of traps to watch out for, so please refer to my next post: [RxSwift Safety Manual](http://swiftpearls.com/RxSwift-Safety-Manual.html)
 
 
 

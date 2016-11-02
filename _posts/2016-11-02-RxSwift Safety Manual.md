@@ -218,5 +218,4 @@ override func prepareForReuse() {
 }
 {% endhighlight %}
 
-
 RxSwift is very complex, but if you set your own rules in the project and adhere to them, you should be fine 😇 It's very important to be consistent in the RxSwift API you're exposing for each layer - it helps with catching bugs.

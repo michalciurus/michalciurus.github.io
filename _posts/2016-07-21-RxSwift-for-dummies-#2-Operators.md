@@ -444,7 +444,7 @@ You can find more examples in the [RxSwfit playgrounds](https://github.com/React
 
 ### That's it!
 
-Wow, you really know a lot now! The only big thing left to teach you are **Subjects**. I know you must be hungry for some practical examples, but don't worry, they're coming!
+Wow, you really know a lot now! The only big thing left to teach you are [**Subjects**](http://swiftpearls.com/RxSwift-for-dummies-3-Subjects.html).
 
 
 
