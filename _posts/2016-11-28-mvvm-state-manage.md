@@ -4,7 +4,7 @@ title: RxSwift MVVM API Manual 📃
 
 Ok, we have all these tools, we're aware of all the dangers. Let's think now how to use it best to create a clear and safe API. Let's use MVVM as the context.
 
-There are many approaches to writing an RxSwift API. My approach is: I use RxSwift as a very cool observer pattern, for managing async tasks and make use of it's awesome operators. I [do not strive to go *100% clean, declarative* RxSwfit](https://github.com/ReactiveX/RxSwift/issues/487).
+There are many approaches to writing an RxSwift API. My approach is: I use RxSwift as a very cool observer pattern, for managing async tasks and make use of it's awesome operators. I [do not strive to go *100% clean, declarative* RxSwfit](https://github.com/ReactiveX/RxSwift/issues/487). I've tried that and lost many valuable hours trying to connect the declarative and imperative world.
 
 Here are some tips I've learned over the time I'm using RxSwift.
 
@@ -16,7 +16,6 @@ Having that said, let's start with the basic: **input vs output**.
 
 {% highlight swift %}
 class FilterViewModel {
- 
  //Input
  let filterButtonsEvents : BehaviorSubject<Int> 
  let filterSelectionEvent : PublishSubject<Int>
@@ -84,7 +83,6 @@ class MyViewModel {
 
 Now your API is clear and explicit!
 
-
 ### MVVM State Machine
 
 Just a little bonus. Something that has been on my mind lately. Complex view controllers very often get very messy when it comes to managing state. Consider using a state machine in your view model to tell your view controller what it should do. Here's a [great article](http://curtclifton.net/generic-state-machine-in-swift) that could get you started.
@@ -94,7 +92,6 @@ Just a little bonus. Something that has been on my mind lately. Complex view con
 • It'll also force you to move move of your logic to your view model 
 
 • It'll **make your code more declarative**!
-
 
 👋
 
