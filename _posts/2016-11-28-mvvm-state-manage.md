@@ -8,7 +8,7 @@ There are many approaches to writing an RxSwift API. My approach is: I use RxSwi
 
 Here are some tips I've learned over the time I'm using RxSwift.
 
-###Be Consistent
+### Be Consistent
 
 It's the most important thing in any API! If you choose one approach: stick with it! 
 
