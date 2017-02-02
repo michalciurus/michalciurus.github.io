@@ -45,20 +45,20 @@ class ExampleClass {
         
         // OBSERVABLE //
         
-    let observable = Observable<String>.create { (observer) -> Disposable in
-        DispatchQueue.global(qos: .default).async {
-            Thread.sleep(forTimeInterval: 10)
-            observer.onNext("Hello dummy 🐣")
-            observer.onCompleted()
-        }
-        return Disposables.create()
-    }        
+        let observable = Observable<String>.create { (observer) -> Disposable in
+            DispatchQueue.global(qos: .default).async {
+                Thread.sleep(forTimeInterval: 10)
+                observer.onNext("Hello dummy 🐣")
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }        
         // OBSERVER //
         
-    observable.subscribe(onNext: { (element) in
-        print(element)
-    }).addDisposableTo(disposeBag)       
-}
+        observable.subscribe(onNext: { (element) in
+            print(element)
+        }).addDisposableTo(disposeBag)       
+    }
 }
 {% endhighlight %}
 
