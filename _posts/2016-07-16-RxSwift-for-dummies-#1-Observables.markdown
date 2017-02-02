@@ -2,7 +2,7 @@
 title: RxSwift For Dummies 🐣 Part 1
 ---
 
-*TODO: Update to Swift 3.0/RxSwift 3.0. Just some minor syntax changes, everything else is still correct so feel free to explore*
+*Edit 02.02.2017: This post was updated to Swift 3.0 and RxSwift 3.2*
 
 **RxSwift** is one of those things you have to try yourself to really start appreciating. It's the one piece of the puzzle that I was missing to glue all the patterns like MVVM, VIPER, [Coordinators/Routing](http://khanlou.com/2015/10/coordinators-redux/).
 
@@ -45,24 +45,20 @@ class ExampleClass {
         
         // OBSERVABLE //
         
-        let observable = Observable<String>.create { (observer) -> Disposable in
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                // Simulate some work
-                NSThread.sleepForTimeInterval(10)
-                observer.onNext("Hello dummy 🐣")
-                observer.onCompleted()
-            })
-            
-            return NopDisposable.instance
+    let observable = Observable<String>.create { (observer) -> Disposable in
+        DispatchQueue.global(qos: .default).async {
+            Thread.sleep(forTimeInterval: 10)
+            observer.onNext("Hello dummy 🐣")
+            observer.onCompleted()
         }
-        
+        return Disposables.create()
+    }        
         // OBSERVER //
         
-        observable.subscribeNext { (element) in
-            print(element)
-        }.addDisposableTo(disposeBag)
-    }
+    observable.subscribe(onNext: { (element) in
+        print(element)
+    }).addDisposableTo(disposeBag)       
+}
 }
 {% endhighlight %}
 
@@ -75,19 +71,18 @@ Let's start from the basic building block in RxSwift: the `Observable`. It's act
 {% highlight swift %}
 let observable = Observable<String>.create { (observer) -> Disposable in
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-    	// Simulate some work
-        NSThread.sleepForTimeInterval(10)
+    DispatchQueue.global(qos: .default).async {
+        // Simulate some work
+        Thread.sleep(forTimeInterval: 10)
         observer.onNext("Hello dummy 🐣")
         observer.onCompleted()
-    })
-    
-    return NopDisposable.instance
+    }
+    return Disposables.create()
 }
 
-observable.subscribeNext { (element) in
-  print(element)
-}.addDisposableTo(disposeBag)
+observable.subscribe(onNext: { (element) in
+print(element)
+}).addDisposableTo(disposeBag)
 {% endhighlight %}
 
 Ok, we have an `Observable`. This is a **cold** ❄️ observable: it will start executing only when an observer subscribes. A **hot** 🔥 observable executes even if it doesn't have any observers. 
@@ -96,13 +91,13 @@ We'll cover the difference and examples in the next parts, so don't worry, but f
 
 Let's analyze step by step what's happening:
 {% highlight swift %}
-dispatch_async(...)
+DispatchQueue.global(qos: .default).async {...}
 {% endhighlight %}
 
-The `Observable` executes code on the main thread (unless programmed otherwise) so let's use a simple `dispatch_async` to not block it. RxSwift has a mechanism called *Schedulers* that we could use instead, but let's leave that for later when you're less of a dummy 🐔.
+The `Observable` executes code on the main thread (unless programmed otherwise) so let's use a simple `DispatchQueue` to not block it. RxSwift has a mechanism called *Schedulers* that we could use instead, but let's leave that for later when you're less of a dummy 🐔.
 
 {% highlight swift %}
-observer.onNext("Hello")
+observer.onNext("Hello dummy 🐣")
 {% endhighlight %}
 
 An `Observable`'s time of work is also called a **sequence**. Throughout it's sequence it can send an infinite number of elements and we use the `onNext` method to emit these.
@@ -114,12 +109,12 @@ observer.onCompleted()
 When it's finished it can send a `Completed` or `Error` event, after which it cannot produce more elements and it releases the closure along with it's references.
 
 {% highlight swift %}
-return NopDisposable.instance
+return Disposables.create()
 {% endhighlight %}
 
 Each `Observable` has to return a `Disposable`.
 
-Use `NopDisposable.instance` if you don't need to dispose of anything. 
+Use `Disposables.create()` if you don't need to dispose of anything. 
 If you look into the [`NopDisposable`](https://github.com/ReactiveX/RxSwift/blob/master/RxSwift/Disposables/NopDisposable.swift) implementation it does completely nothing - just empty methods. 
 
 #### Disposable
@@ -127,11 +122,11 @@ If you look into the [`NopDisposable`](https://github.com/ReactiveX/RxSwift/blob
 The `Disposable` that needs to be returned in the `Observable` is used to  clean up the `Observable` if it doesn't have a chance to complete the work normally. For example you can use the `AnonymousDisposable`:
 
 {% highlight swift %}
-return AnonymousDisposable {
+return Disposables.create(with: {
     connection.close()
     database.closeImportantSomething()
     cache.clear()
-}
+})
 {% endhighlight %}
 
 The `Disposable` is called only when an `Observer` is disposed of prematurely: when it gets deallocated, or `dispose()` is called manually. Most of the times the `dispose()` is called automatically thanks to **Dispose Bags**. A little lost? Don't worry, you'll be able to implement that yourself on a more concrete example.
@@ -145,9 +140,9 @@ let disposeBag = DisposeBag()
 
 ...
 
-observable.subscribeNext { (element) in
+observable.subscribe(onNext: {(element) in
   print(element)
-}.addDisposableTo(disposeBag)
+}).addDisposableTo(disposeBag)
 {% endhighlight %}
 
 That's the way you subscribe. Subscription is created and a `Disposable` (a record of that subscription) is returned by the `subscribeNext` method.
@@ -158,7 +153,7 @@ The `Observable` has started work and after 10 seconds you'll see this printed o
 Hello dummy 🐣
 {% endhighlight %}
 
-`subscribeNext` will only react to `Next` events. You can also use `subscribeCompleted` and `subscribeError`.
+`subscribe(onNext:)` will only react to `Next` events. You can also use `subscribe(onCompleted:)` and `subscribe(onError:)`.
 
 #### Dispose Bag 🗑
 
@@ -181,13 +176,13 @@ If you don't understand now, don't worry, a better example is coming.
 
 {% highlight swift %}
 let observable = Observable<String>.just("Hello again dummy 🐥");
-observable.subscribeNext { (element) in
+observable.subscribe(onNext: { (element) in
     print(element)
-}.addDisposableTo(disposeBag)
+}).addDisposableTo(disposeBag)
         
-observable.subscribeCompleted { 
+observable.subscribe(onCompleted: { 
     print("I'm done")
-}.addDisposableTo(disposeBag)
+}).addDisposableTo(disposeBag)
 {% endhighlight %}
 
 {% highlight text %}
@@ -201,9 +196,9 @@ I'm done
 
 {% highlight swift %}
 let observable = Observable<Int>.interval(0.3, scheduler: MainScheduler.instance)
-observable.subscribeNext { (element) in
+observable.subscribe(onNext: { (element) in
    print(element)
-}.addDisposableTo(disposeBag)
+}).addDisposableTo(disposeBag)
 {% endhighlight %}
 
 {% highlight text %}
@@ -220,9 +215,9 @@ observable.subscribeNext { (element) in
 
 {% highlight swift %}
 let observable = Observable<String>.repeatElement("This is fun 🙄")
-observable.subscribeNext { (element) in
+observable.subscribe(onNext: { (element) in
    print(element)
-}.addDisposableTo(disposeBag)
+}).addDisposableTo(disposeBag)
 {% endhighlight %}
 
 {% highlight text %}
@@ -252,31 +247,35 @@ final class GoogleModel {
         
         return Observable<String>.create({ (observer) -> Disposable in
             
-            let session = NSURLSession.sharedSession()
-            let task = session.dataTaskWithURL(NSURL(string:"https://www.google.com")!) { (data, response, error) in
+            let session = URLSession.shared
+            let task = session.dataTask(with: URL(string:"https://www.google.com")!) { (data, response, error) in
                 
                 // We want to update the observer on the UI thread
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async {
                     if let err = error {
                         // If there's an error, send an Error event and finish the sequence
                         observer.onError(err)
                     } else {
-                        let googleString = NSString(data: data!, encoding: NSASCIIStringEncoding) as String?
-                        //Emit the fetched element
-                        observer.onNext(googleString!)
+                        if let googleString = String(data: data!, encoding: .ascii) {
+                            //Emit the fetched element
+                            observer.onNext(googleString!)
+                        } else {
+                            //Send error string if we weren't able to parse the response data
+                            observer.onNext("Error! Unable to parse the response data from google!")
+                        }
                         //Complete the sequence
                         observer.onCompleted()
                     }
-                })
-                
+                }
             }
             
             task.resume()
             
-            return AnonymousDisposable {
+            //Return an AnonymousDisposable
+            return Disposables.create(with: {
                 //Cancel the connection if disposed
                 task.cancel()
-            }
+            })
         })
     }
 }
@@ -285,15 +284,15 @@ final class GoogleModel {
 That's pretty simple: the `createGoogleDataObservable` creates an `Observable` we can subscribe to. The `Observable` creates a data task and fetches the *google.com* website.
 
 {% highlight swift %}
-dispatch_async(dispatch_get_main_queue()...
+DispatchQueue.main.async {...}
 {% endhighlight %}
 
-The data task of `NSURLSession` is executed on a background thread, so we need to update Observers on the UI queue. Remember that we could use *schedulers*, but I'll cover that in a more advanced stage.
+The data task of `URLSession` is executed on a background thread, so we need to update Observers on the UI queue. Remember that we could use *schedulers*, but I'll cover that in a more advanced stage.
 
 {% highlight swift %}
-return AnonymousDisposable {
+return Disposables.create(with: {
  task.cancel()
-}
+})
 {% endhighlight %}
 
 The `Disposable` is a great mechanism: if the observer stops observing the data task will be cancelled.
@@ -319,9 +318,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         //Remember about [weak self]/[unowned self] to prevent retain cycles!
-        model.createGoogleDataObservable().subscribeNext { [weak self] (element) in
-            self?.googleText.text = element
-        }.addDisposableTo(disposeBag)
+        model.createGoogleDataObservable()
+            .subscribe(onNext: { [weak self] (element) in
+                self?.googleText.text = element
+            }).addDisposableTo(disposeBag)
         
     }
 }
@@ -345,7 +345,7 @@ let disposeBag = DisposeBag()
 
 When the view controller gets deinitialized, it will also release the `disposeBag`.
 
-If the `disposeBag` is released, it's `deinit` will be called and our `AnonymousDisposable` will be called on our `Observable` and the data task will be cancelled and the connection will be closed if it didn't have a chance to finish! 
+If the `disposeBag` is released, it's `deinit` will be called and our `AnonymousDisposable` (created using Disposables.create(with:)) will be called on our `Observable` and the data task will be cancelled and the connection will be closed if it didn't have a chance to finish! 
 
 I hope this clearly explains the mechanism of dispose bags.
 
@@ -356,3 +356,5 @@ I hope this clearly explains the mechanism of dispose bags.
 This wraps it up. You've learned how to create observables and observers, how disposing works and hopefully you can see how this is better than the usual observer patterns.
 
 [Part 2](http://swiftpearls.com/RxSwift-for-dummies-2-Operators.html) is about the whole *functional* part in RxSwift - operators.
+
+*Update: This post was updated to Swift 3.0 & RxSwift 3.2 by [Yogish](https://www.twitter.com/iamyogishh)*
