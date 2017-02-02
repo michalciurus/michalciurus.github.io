@@ -29,9 +29,7 @@ final class GoogleModel {
                             //Emit the fetched element
                             observer.onNext(googleString)
                         } else {
-                            //Show error to the user if we weren't able to parse the response data
-                            observer.onNext("Unable to parse the data from google!")
-                        }
+                                                  }
                         //Complete the sequence
                         observer.onCompleted()
                     }
