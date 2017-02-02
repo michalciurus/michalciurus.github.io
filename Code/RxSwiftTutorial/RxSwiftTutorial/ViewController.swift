@@ -24,10 +24,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         //Remember about [weak self]/[unowned self] to prevent retain cycles!
-        model.createGoogleDataObservable().subscribeNext { [weak self] (element) in
-            self?.googleText.text = element
-        }.addDisposableTo(disposeBag)
-        
+        model.createGoogleDataObservable()
+            .subscribe(onNext: {  [weak self] (element) in
+                self?.googleText.text = element
+            })
+        .addDisposableTo(disposeBag)
     }
 }
 

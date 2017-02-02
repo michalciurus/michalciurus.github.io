@@ -16,31 +16,34 @@ final class GoogleModel {
         
         return Observable<String>.create({ (observer) -> Disposable in
             
-            let session = NSURLSession.sharedSession()
-            let task = session.dataTaskWithURL(NSURL(string:"https://www.google.com")!) { (data, response, error) in
+            let session = URLSession.shared
+            let task = session.dataTask(with: URL(string:"https://www.google.com")!) { (data, response, error) in
                 
                 // We want to update the observer on the UI thread
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async {
                     if let err = error {
                         // If there's an error, send an Error event and finish the sequence
                         observer.onError(err)
                     } else {
-                        let googleString = NSString(data: data!, encoding: NSASCIIStringEncoding) as String?
-                        //Emit the fetched element
-                        observer.onNext(googleString!)
+                        if let googleString = String(data: data!, encoding: .ascii) {
+                            //Emit the fetched element
+                            observer.onNext(googleString)
+                        } else {
+                            //Show error to the user if we weren't able to parse the response data
+                            observer.onNext("Unable to parse the data from google!")
+                        }
                         //Complete the sequence
                         observer.onCompleted()
                     }
-                })
-                
+                }
             }
             
             task.resume()
             
-            return AnonymousDisposable {
+            return Disposables.create(with: {
                 //Cancel the connection if disposed
                 task.cancel()
-            }
+            })
         })
     }
 }
