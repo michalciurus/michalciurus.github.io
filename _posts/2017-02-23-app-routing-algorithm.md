@@ -1,8 +1,8 @@
 ---
-title: App Navigation Routing Algorithm 📃
+title: App Navigation Routing Algorithm 🌳
 ---
 
-Recently I've been experimenting with [ReSwift](https://github.com/ReSwift/ReSwift) and [Katana](https://github.com/BendingSpoons/katana-swift) and I created my first OSS library in Swift: [KatanaRouter](https://github.com/michalciurus/KatanaRouter).
+Recently I've been experimenting with [ReSwift](https://github.com/ReSwift/ReSwift) and [Katana](https://github.com/BendingSpoons/katana-swift) and I created my first OSS library in Swift: [KatanaRouter](https://github.com/michalciurus/KatanaRouter) 😎
 
 Katana and ReSwift are based on Redux, and the idea is simple: keep all of your state in one structure. The thing is, it also should contain the navigation state, that's why [ReSwift-Router](https://github.com/ReSwift/ReSwift-Router) was born.
 
@@ -10,7 +10,7 @@ I was inspired by *ReSwift-Router* to create a similar library for *Katana*, but
 
 It has lead me to creating an algorithm that can be used in any routing really, not just Redux-style architecture.
 
-### Problem
+### Problem 🤔
 
 An app navigation state is a tree:
 
@@ -32,11 +32,11 @@ Tab One(active)    Tab Two         Tab Three
 ChildVc(active)     ChildVc          ChildVc
 ```
 
-It's simple enough to change that tree if you want to push a destination, or pop one. It gets much more complicated if you want to do more complex operations.
+It's simple enough to change that tree if you want to push a destination, or pop one. It gets much more complicated if you want to do more complex operations 😨
 
 That's why, for the needs of *KatanaRouter* I created a diffing algorithm for trees that represent a navigation state.
 
-### Solution
+### Solution 💡
 
 Let's say that we have navigation state tree A and tree B. The task is to return all the important differences in these trees. I've distinguished 4 different actions:
 
@@ -48,7 +48,7 @@ Let's say that we have navigation state tree A and tree B. The task is to return
 
 • **ChangeActiveDestination** - Called when there's a new destination set to active e.g. child in a tab controller.
 
-So, I had to create an algorithm that accepts two trees and returns an array of  these actions. What's important is the order:
+So, I had to create an algorithm that accepts two trees and returns an array of  these actions. What's very important is the order: you have to run all the UI transitions in the correct order, otherwise it doesn't make sense. The easiest rule is that first you have to pop, then you have to push, right? But there's a lot more:
 
 1. First we have to traverse through inactive nodes and finish with active last.
 2. You have to return all the pop actions in post order
@@ -139,7 +139,7 @@ class NavigationTreeDiff {
 
 [Here's the whole class](https://github.com/michalciurus/KatanaRouter/blob/master/KatanaRouter/NavigationTreeDiff.swift) if you want to take a look.
 
-### Usability
+### Usability 🛠
 
 As I already mentioned, this algorithm can be used in any app routing, not only Redux-style Katana, or ReSwift.
 
