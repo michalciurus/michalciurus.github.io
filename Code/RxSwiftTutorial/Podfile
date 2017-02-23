@@ -6,6 +6,6 @@ target 'RxSwiftTutorial' do
   use_frameworks!
 
   pod 'RxCocoa’
-  pod 'RxSwift',    '~> 2.0'
+  pod 'RxSwift'
 
 end

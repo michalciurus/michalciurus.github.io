@@ -1,14 +1,18 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "32FE7A32D7022893942454DA8374E0272EEBA5D2",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "32FE7A32D7022893942454DA8374E0272EEBA5D2+++FFDD52D",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "32FE7A32D7022893942454DA8374E0272EEBA5D2" : 0
+    "32FE7A32D7022893942454DA8374E0272EEBA5D2+++FFDD52D" : 9223372036854775807,
+    "32FE7A32D7022893942454DA8374E0272EEBA5D2+++50E1FFA" : 0,
+    "32FE7A32D7022893942454DA8374E0272EEBA5D2+++477C38A" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9800373F-0EA5-40F7-9B80-F7CCF7CF5755",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "32FE7A32D7022893942454DA8374E0272EEBA5D2" : ""
+    "32FE7A32D7022893942454DA8374E0272EEBA5D2+++FFDD52D" : "michalciurus.github.io\/",
+    "32FE7A32D7022893942454DA8374E0272EEBA5D2+++50E1FFA" : "",
+    "32FE7A32D7022893942454DA8374E0272EEBA5D2+++477C38A" : ""
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "RxSwiftTutorial",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -17,12 +21,17 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/michalciurus\/michalciurus.github.io.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "32FE7A32D7022893942454DA8374E0272EEBA5D2"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "32FE7A32D7022893942454DA8374E0272EEBA5D2+++477C38A"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/michalciurus\/michalciurus.github.io.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "32FE7A32D7022893942454DA8374E0272EEBA5D2"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "32FE7A32D7022893942454DA8374E0272EEBA5D2+++50E1FFA"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/iamyogish\/michalciurus.github.io.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "32FE7A32D7022893942454DA8374E0272EEBA5D2+++FFDD52D"
     }
   ]
 }
