@@ -18,7 +18,7 @@ I needed it to return a **different mocked response** - one with an added post. 
 
 You have no way of messaging the app's API while running UI tests - it's a different process. You can't dynamically (while running a test) change the stubbed response. There's no way to call [OHHTTPStubs](https://github.com/AliSoftware/OHHTTPStubs) in the app process, from the UI tests process to change the current stubbed response. That leaves us with hosting a mock server, right? There's a mock server running and you contact it if you need to switch the responses dynamically.
 
-I started wondering in which language should I implement the mock server. But then - thank god 🙏🏻 - I consulted [@Cojoj](https://twitter.com/cojoj) and he asked me: "Why not run the server **inside** the unit tests process?". It turned out to be a great idea! I used the awesome [Swifter](https://github.com/httpswift/swifter) framework for that.
+I started wondering in which language should I implement the mock server. But then - thank god 🙏🏻 - I consulted [@Cojoj](https://twitter.com/cojoj) and he asked me: *"Why not run the server **inside** the unit tests process?"*. It turned out to be a great idea! I used the awesome [Swifter](https://github.com/httpswift/swifter) framework for that.
 
 • It's very easy to setup.
 
