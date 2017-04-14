@@ -119,9 +119,9 @@ class UITests: XCTestCase {
     }
     
     func testPostCreation() {
-		...
-		// Dynamically change the response to see if the feed gets refreshed and post is there
-		dynamicStubs.setupStub(url: "/api/feed", filename: "feedWithCreatedPost")
+        ...
+        // Dynamically change the response to see if the feed gets refreshed and post is there
+        dynamicStubs.setupStub(url: "/api/feed", filename: "feedWithCreatedPost")
         app.buttons["createPostButton"].tap()
         ...            
     }
