@@ -54,6 +54,7 @@ class HTTPDynamicStubs {
     }
     
     func setupInitialStubs() {
+        // Setting up all the initial mocks from the array
         for stub in initialStubs {
             setupStub(url: stub.url, filename: stub.jsonFilename, method: stub.method)
         }
@@ -64,8 +65,10 @@ class HTTPDynamicStubs {
         let filePath = testBundle.path(forResource: filename, ofType: "json")
         let fileUrl = URL(fileURLWithPath: filePath!)
         let data = try! Data(contentsOf: fileUrl, options: .uncached)
+        // Looking for a file and converting it to JSOn
         let json = dataToJSON(data: data)
         
+        // Swifter makes it very easy to create stubbed responses
         let response: ((HttpRequest) -> HttpResponse) = { _ in
             return HttpResponse.ok(.json(json as AnyObject))
         }
@@ -129,7 +132,7 @@ class UITests: XCTestCase {
 {% endhighlight %}
 
 
-Of course you have to use `http://localhost:8080/` address in your *production* app for UI testing. Fortunately, that's the only thing that you have to add to your production code. Just make sure it doesn't leak to your production app 😨😎
+Of course you have to use `http://localhost:8080/` address in your *production* app for UI testing. Fortunately, that's the only thing that you have to add to your production code. Just make sure it doesn't leak to your released app 😨😎
 
 This approach allows you to push your UI testing to a higher level. I hope you liked it! Reach me on [Twitter](https://twitter.com/MichaelCiurus) if you have any questions or suggestions 😘
 
